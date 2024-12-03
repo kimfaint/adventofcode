@@ -47,14 +47,24 @@ def safe(report):
     return True, ""
 
 
+part_2 = True
 print("Calculate how many reports are safe")
 number_safe = 0
 for rep in reports:
     safety, reason = safe(rep)
-    rep += [safety, reason]
+    print(rep, safety, reason)
+    if not safety and part_2:
+        # Try removing each element in turn and re-check if safe
+        for n in range(len(rep)):
+            rep_n = rep.copy()
+            rep_n.pop(n)
+            safety, reason = safe(rep_n)
+            print("  ", rep_n, safety, reason)
+            if safety:
+                print(f"   Deemed safe after removal of {n}th element")
+                break
     if safety:
         number_safe += 1
-pprint(reports)
 
 print("Number of safe reports")
 print(number_safe)
