@@ -18,8 +18,22 @@ print("Read file into text buffer")
 data = open(input_file, 'r').read()
 print(data[:1000])
 
-print("Fine each valid `mul(X,Y)` and multiple, then total")
+print("Part 1: Find each valid `mul(X,Y)` and multiply, then total")
 total = 0
 for x, y in re.findall(r"mul\((\d+),(\d+)\)", data):
     total += int(x) * int(y)
+print(total)
+
+print("Part 2: Find each valid `mul(X,Y)|do()|dont()` enable/disable and multiply, then total")
+total = 0
+x = 0
+y = 0
+enabled = True
+for mul, x, y, do, dont in re.findall(r"(mul)\((\d+),(\d+)\)|(do)\(\)|(don't)\(\)", data):
+    if do:
+        enabled = True
+    elif dont:
+        enabled = False
+    elif mul and enabled:
+        total += int(x) * int(y)
 print(total)
