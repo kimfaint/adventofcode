@@ -82,4 +82,32 @@ def part1():
     print(f"Part 1 {matches = }")
 
 
+def is_x_mas(x, y):
+    """
+    Return True is the coorindate x,y is the centre of a 3x3 array
+    with "A" in the middle and both diagaonals have "M" on one end and "S" on the other
+    """
+    if data[y][x] != "A":
+        return False
+    diagonal1 = data[y - 1][x - 1] + "A" + data[y + 1][x + 1]
+    diagonal2 = data[y + 1][x - 1] + "A" + data[y - 1][x + 1]
+    masses = ["MAS", "SAM"]
+    return diagonal1 in masses and diagonal2 in masses
+
+
+def part2():
+    matches = 0
+    # Iterate over each letter left to right, top to bottom
+    # but we can start in row/col 1 and finish in -1,
+    # because that's as close as we can get to the edge and be able to find a X-MAS.
+    # If we find the "A" character, which is allways in the middle,
+    # then call x_mas to see if it is the centre on an X_MAS
+    for y in range(1, data_height - 1):
+        for x in range(1, data_width - 1):
+            if is_x_mas(x, y):
+                matches += 1
+    print(f"Part 2 {matches = }")
+
+
 part1()
+part2()
